@@ -354,7 +354,7 @@ sub parse {
                     $paragraph = $texts[0];
                     $self->pushline("\n");
                 }
-            } elsif ( length($paragraph) ) {
+            } else {
                 $new_line = "\n";
             }
 
@@ -816,7 +816,7 @@ sub parse {
 
             # This is a table, treat it as a non-wrapped paragraph
             print STDERR "Found Table delimiter\n" if ( $debug{parse} );
-            if ( ( $paragraph eq "" ) or ( defined( $self->{type} ) and ( $self->{type} =~ /^delimited block/i ) ) ) {
+            if ( ( $paragraph eq "" and ( !defined( $self->{type} ) or !( $self->{type} =~ /^Table/i ) ) ) or ( defined( $self->{type} ) and ( $self->{type} =~ /^delimited block/i ) ) ) {
 
                 # Start the table
                 $wrapped_mode = 0;
